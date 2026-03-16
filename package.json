@@ -14,7 +14,8 @@
     "check": "pnpm run format:check && pnpm run lint",
     "migrate": "tsx scripts/migrateToSupabase.ts",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "types:check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
