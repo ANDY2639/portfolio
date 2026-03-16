@@ -22,13 +22,16 @@ export function useSkills() {
 
       return data.map((skill): Skill => {
         const category = skill.category;
-        const validCategory: Skill["category"] = 
-          category === "frontend" || category === "backend" || category === "tools" || category === "other"
+        const validCategory: Skill["category"] =
+          category === "frontend" ||
+          category === "backend" ||
+          category === "tools" ||
+          category === "other"
             ? category
             : "other";
 
         const level = skill.level;
-        const validLevel: Skill["level"] = 
+        const validLevel: Skill["level"] =
           level === "beginner" || level === "intermediate" || level === "advanced"
             ? level
             : undefined;

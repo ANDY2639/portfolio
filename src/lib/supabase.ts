@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+
 import type { Database } from "./database.types";
 
 // Estas variables se cargarán desde el archivo .env.local en desarrollo
@@ -7,9 +8,7 @@ const supabaseUrl: string = import.meta.env.VITE_SUPABASE_URL ?? "";
 const supabaseAnonKey: string = import.meta.env.VITE_SUPABASE_ANON_KEY ?? "";
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    "Missing Supabase environment variables. The app will use local fallback data.",
-  );
+  console.warn("Missing Supabase environment variables. The app will use local fallback data.");
 }
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {

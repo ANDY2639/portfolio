@@ -27,8 +27,11 @@ export function useProjects(category?: string) {
 
       return data.map((p): Project => {
         const projectCategory = p.category;
-        const validCategory: Project["category"] = 
-          projectCategory === "frontend" || projectCategory === "fullstack" || projectCategory === "backend" || projectCategory === "mobile"
+        const validCategory: Project["category"] =
+          projectCategory === "frontend" ||
+          projectCategory === "fullstack" ||
+          projectCategory === "backend" ||
+          projectCategory === "mobile"
             ? projectCategory
             : "frontend";
 
