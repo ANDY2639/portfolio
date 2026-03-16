@@ -1,16 +1,12 @@
 import { useState } from "react";
-
-import { projects, categories } from "../../data/projects";
+import { categories } from "../../data/projects";
+import { useProjects } from "../../hooks/useProjects";
 import { SectionTitle } from "../common/SectionTitle";
 import { ProjectCard } from "../ui/ProjectCard";
 
 export function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-
-  const filteredProjects =
-    selectedCategory === "all"
-      ? projects
-      : projects.filter((project) => project.category === selectedCategory);
+  const { data: projects, isLoading } = useProjects(selectedCategory);
 
   return (
     <section id="projects" className="py-20 px-4 bg-base-200">
@@ -38,13 +34,21 @@ export function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="card bg-base-100 shadow-xl skeleton h-[400px] w-full"></div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects?.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
 
-        {filteredProjects.length === 0 && (
+        {!isLoading && (!projects || projects.length === 0) && (
           <div className="text-center py-12">
             <p className="text-xl opacity-70">No hay proyectos en esta categoría</p>
           </div>

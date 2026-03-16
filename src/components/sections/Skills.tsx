@@ -1,16 +1,17 @@
 import { useState } from "react";
-
-import { skills, skillCategories } from "../../data/skills";
+import { skillCategories } from "../../data/skills";
+import { useSkills } from "../../hooks/useSkills";
 import { SectionTitle } from "../common/SectionTitle";
 import { SkillBadge } from "../ui/SkillBadge";
 
 export function Skills() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const { data: skills, isLoading } = useSkills();
 
   const filteredSkills =
     selectedCategory === "all"
       ? skills
-      : skills.filter((skill) => skill.category === selectedCategory);
+      : skills?.filter((skill) => skill.category === selectedCategory);
 
   return (
     <section id="skills" className="py-20 px-4 bg-base-100">
@@ -31,13 +32,21 @@ export function Skills() {
         </div>
 
         {/* Skills Grid */}
-        <div className="flex flex-wrap gap-3 justify-center">
-          {filteredSkills.map((skill) => (
-            <SkillBadge key={skill.name} skill={skill} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex flex-wrap gap-3 justify-center">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="badge badge-lg h-10 w-24 skeleton"></div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-3 justify-center">
+            {filteredSkills?.map((skill) => (
+              <SkillBadge key={skill.name} skill={skill} />
+            ))}
+          </div>
+        )}
 
-        {filteredSkills.length === 0 && (
+        {!isLoading && (!filteredSkills || filteredSkills.length === 0) && (
           <div className="text-center py-12">
             <p className="text-xl opacity-70">No hay habilidades en esta categoría</p>
           </div>

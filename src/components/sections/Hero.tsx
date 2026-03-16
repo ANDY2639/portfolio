@@ -1,6 +1,10 @@
-import { personalInfo } from "../../data/personal";
+import { usePersonalInfo } from "../../hooks/usePersonalInfo";
 
 export function Hero() {
+  const { data: personalInfo } = usePersonalInfo();
+
+  if (!personalInfo) return null;
+
   return (
     <section id="home" className="hero min-h-screen bg-base-200">
       <div className="hero-content text-center">

@@ -1,7 +1,11 @@
-import { personalInfo } from "../../data/personal";
+import { usePersonalInfo } from "../../hooks/usePersonalInfo";
 import { SectionTitle } from "../common/SectionTitle";
 
 export function About() {
+  const { data: personalInfo } = usePersonalInfo();
+
+  if (!personalInfo) return null;
+
   return (
     <section id="about" className="py-20 px-4 bg-base-100">
       <div className="container mx-auto max-w-6xl">
@@ -11,9 +15,15 @@ export function About() {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
-            <div className="avatar placeholder">
-              <div className="bg-neutral text-neutral-content w-64 rounded-full">
-                <span className="text-8xl">{personalInfo.name.charAt(0)}</span>
+            <div className="avatar">
+              <div className="bg-neutral text-neutral-content w-64 rounded-full overflow-hidden">
+                {personalInfo.avatar_url ? (
+                  <img src={personalInfo.avatar_url} alt={personalInfo.name} />
+                ) : (
+                  <span className="text-8xl flex items-center justify-center h-full w-full">
+                    {personalInfo.name.charAt(0)}
+                  </span>
+                )}
               </div>
             </div>
           </div>

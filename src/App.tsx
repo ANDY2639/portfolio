@@ -1,24 +1,20 @@
-import { Footer } from "./components/layout/Footer";
-import { Navbar } from "./components/layout/Navbar";
-import { About } from "./components/sections/About";
-import { Contact } from "./components/sections/Contact";
-import { Hero } from "./components/sections/Hero";
-import { Projects } from "./components/sections/Projects";
-import { Skills } from "./components/sections/Skills";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MainLayout } from "./layouts/MainLayout";
+import { Home } from "./pages/Home";
+import { BlogPostPage } from "./pages/BlogPostPage";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <Router basename="/portfolio">
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="blog/:slug" element={<BlogPostPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

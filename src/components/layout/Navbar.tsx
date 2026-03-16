@@ -1,13 +1,31 @@
+import { Link, useLocation } from "react-router-dom";
 import { personalInfo } from "../../data/personal";
 
 export function Navbar() {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+
   const navItems = [
-    { label: "Inicio", href: "#home" },
-    { label: "Sobre mí", href: "#about" },
-    { label: "Proyectos", href: "#projects" },
-    { label: "Habilidades", href: "#skills" },
-    { label: "Contacto", href: "#contact" },
+    { label: "Inicio", href: "/#home" },
+    { label: "Sobre mí", href: "/#about" },
+    { label: "Proyectos", href: "/#projects" },
+    { label: "Habilidades", href: "/#skills" },
+    { label: "Blog", href: "/#blog" },
+    { label: "Contacto", href: "/#contact" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Si estamos en home y el link es un hash, dejamos que useScrollToHash lo maneje
+    if (isHome && href.startsWith("/#")) {
+      const id = href.split("#")[1];
+      const element = document.getElementById(id);
+      if (element) {
+        e.preventDefault();
+        element.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href);
+      }
+    }
+  };
 
   return (
     <div className="navbar bg-base-100 sticky top-0 z-50 shadow-md">
@@ -35,28 +53,43 @@ export function Navbar() {
           >
             {navItems.map((item) => (
               <li key={item.href}>
-                <a href={item.href}>{item.label}</a>
+                <Link 
+                  to={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                >
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
-        <a href="#home" className="btn btn-ghost text-xl">
+        <Link to="/" className="btn btn-ghost text-xl">
           {personalInfo.name}
-        </a>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 gap-2">
           {navItems.map((item) => (
             <li key={item.href}>
-              <a href={item.href}>{item.label}</a>
+              <Link 
+                to={item.href}
+                className="rounded-lg transition-colors"
+                onClick={(e) => handleNavClick(e, item.href)}
+              >
+                {item.label}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
       <div className="navbar-end">
-        <a href="#contact" className="btn btn-primary">
+        <Link 
+          to="/#contact" 
+          className="btn btn-primary"
+          onClick={(e) => handleNavClick(e, "/#contact")}
+        >
           Contáctame
-        </a>
+        </Link>
       </div>
     </div>
   );

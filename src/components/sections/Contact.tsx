@@ -1,12 +1,46 @@
-import { personalInfo } from "../../data/personal";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { usePersonalInfo } from "../../hooks/usePersonalInfo";
+import { useContactMutation } from "../../hooks/useContactMutation";
 import { SectionTitle } from "../common/SectionTitle";
+import type { ContactMessage } from "../../types";
 
-function handleSubmit(e: React.FormEvent) {
-  e.preventDefault();
-  alert("Este es un formulario de demostración. Funcionalidad de envío no implementada.");
-}
+const contactSchema = z.object({
+  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+  email: z.string().email("Email inválido"),
+  subject: z.string().optional(),
+  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
+});
 
 export function Contact() {
+  const { data: personalInfo } = usePersonalInfo();
+  const contactMutation = useContactMutation();
+  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactMessage>({
+    resolver: zodResolver(contactSchema),
+  });
+
+  const onSubmit = (data: ContactMessage) => {
+    contactMutation.mutate(data, {
+      onSuccess: () => {
+        alert("¡Mensaje enviado con éxito!");
+        reset();
+      },
+      onError: (error) => {
+        alert("Error al enviar el mensaje. Por favor intenta de nuevo.");
+        console.error(error);
+      },
+    });
+  };
+
+  if (!personalInfo) return null;
+
   return (
     <section id="contact" className="py-20 px-4 bg-base-200">
       <div className="container mx-auto max-w-4xl">
@@ -18,66 +52,54 @@ export function Contact() {
             <div className="card-body">
               <h3 className="card-title mb-4">Envíame un mensaje</h3>
 
-              <div role="alert" className="alert alert-info mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="h-6 w-6 shrink-0 stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-                <span className="text-sm">
-                  Este es un formulario de demostración. No envía mensajes reales.
-                </span>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <label className="form-control" htmlFor="name" aria-label="Nombre">
-                  <div className="label">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div className="form-control">
+                  <label className="label" htmlFor="name">
                     <span className="label-text">Nombre</span>
-                  </div>
+                  </label>
                   <input
                     id="name"
+                    {...register("name")}
                     type="text"
                     placeholder="Tu nombre"
-                    className="input input-bordered"
-                    required
+                    className={`input input-bordered ${errors.name ? "input-error" : ""}`}
                   />
-                </label>
+                  {errors.name && <span className="text-error text-sm mt-1">{errors.name.message}</span>}
+                </div>
 
-                <label className="form-control" htmlFor="email" aria-label="Email">
-                  <div className="label">
+                <div className="form-control">
+                  <label className="label" htmlFor="email">
                     <span className="label-text">Email</span>
-                  </div>
+                  </label>
                   <input
                     id="email"
+                    {...register("email")}
                     type="email"
                     placeholder="tu@email.com"
-                    className="input input-bordered"
-                    required
+                    className={`input input-bordered ${errors.email ? "input-error" : ""}`}
                   />
-                </label>
+                  {errors.email && <span className="text-error text-sm mt-1">{errors.email.message}</span>}
+                </div>
 
-                <label className="form-control" htmlFor="message" aria-label="Mensaje">
-                  <div className="label">
+                <div className="form-control">
+                  <label className="label" htmlFor="message">
                     <span className="label-text">Mensaje</span>
-                  </div>
+                  </label>
                   <textarea
                     id="message"
-                    className="textarea textarea-bordered h-32"
+                    {...register("message")}
+                    className={`textarea textarea-bordered h-32 ${errors.message ? "textarea-error" : ""}`}
                     placeholder="Tu mensaje aquí..."
-                    required
                   ></textarea>
-                </label>
+                  {errors.message && <span className="text-error text-sm mt-1">{errors.message.message}</span>}
+                </div>
 
-                <button type="submit" className="btn btn-primary w-full">
-                  Enviar Mensaje
+                <button 
+                  type="submit" 
+                  className={`btn btn-primary w-full ${contactMutation.isPending ? "loading" : ""}`}
+                  disabled={contactMutation.isPending}
+                >
+                  {contactMutation.isPending ? "Enviando..." : "Enviar Mensaje"}
                 </button>
               </form>
             </div>

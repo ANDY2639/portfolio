@@ -10,20 +10,26 @@ export interface Project {
     live?: string;
     demo?: string;
   };
+  views_count?: number;
+  is_featured?: boolean;
 }
 
 export interface Skill {
+  id?: string;
   name: string;
   category: "frontend" | "backend" | "tools" | "other";
   level?: "beginner" | "intermediate" | "advanced";
+  icon_url?: string;
 }
 
 export interface PersonalInfo {
+  id?: string;
   name: string;
   title: string;
   bio: string;
   location: string;
   email: string;
+  avatar_url?: string;
   social: {
     github?: string;
     linkedin?: string;
@@ -31,7 +37,37 @@ export interface PersonalInfo {
   };
 }
 
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  cover_image_url?: string;
+  tags: string[];
+  reading_time: number;
+  is_published: boolean;
+  published_at?: string;
+  views_count: number;
+  created_at: string;
+}
+
 export interface Category {
   value: string;
   label: string;
+}
+
+export interface ContactMessage {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
+
+export interface SiteStats {
+  total_visits: number;
+  unique_visitors: number;
+  today_visits: number;
+  this_week_visits: number;
+  this_month_visits: number;
 }
