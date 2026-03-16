@@ -1,7 +1,6 @@
 import { useState } from "react";
-
-import { categories } from "../../data/projects";
-import { useProjects } from "../../hooks/useProjects";
+import { categories } from "@/data/projects";
+import { useProjects } from "@/hooks/useProjects";
 import { SectionTitle } from "../common/SectionTitle";
 import { ProjectCard } from "../ui/ProjectCard";
 

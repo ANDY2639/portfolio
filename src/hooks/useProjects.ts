@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { projects as fallbackData } from "../data/projects";
 import { supabase } from "../lib/supabase";
 import type { Project } from "../types";

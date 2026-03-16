@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-
-import { personalInfo } from "../../data/personal";
+import { personalInfo } from "@/data/personal";
 
 export function Navbar() {
   const { pathname } = useLocation();

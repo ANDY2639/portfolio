@@ -1,4 +1,4 @@
-import { usePersonalInfo } from "../../hooks/usePersonalInfo";
+import { usePersonalInfo } from "@/hooks/usePersonalInfo";
 import { SectionTitle } from "../common/SectionTitle";
 
 export function About() {

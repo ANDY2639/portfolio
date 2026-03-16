@@ -1,4 +1,4 @@
-import { usePersonalInfo } from "../../hooks/usePersonalInfo";
+import { usePersonalInfo } from "@/hooks/usePersonalInfo";
 
 export function Hero() {
   const { data: personalInfo } = usePersonalInfo();

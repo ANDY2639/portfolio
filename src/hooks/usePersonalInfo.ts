@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { personalInfo as fallbackData } from "../data/personal";
 import { supabase } from "../lib/supabase";
 import type { PersonalInfo } from "../types";

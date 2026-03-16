@@ -1,4 +1,4 @@
-import { personalInfo } from "../../data/personal";
+import { personalInfo } from "@/data/personal";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

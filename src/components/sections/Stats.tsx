@@ -1,4 +1,4 @@
-import { useSiteStats } from "../../hooks/useSiteStats";
+import { useSiteStats } from "@/hooks/useSiteStats";
 
 export function Stats() {
   const { data: stats, isLoading } = useSiteStats();

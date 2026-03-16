@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { skills as fallbackData } from "../data/skills";
 import { supabase } from "../lib/supabase";
 import type { Skill } from "../types";

@@ -1,10 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
-import { useContactMutation } from "../../hooks/useContactMutation";
-import { usePersonalInfo } from "../../hooks/usePersonalInfo";
-import type { ContactMessage } from "../../types";
+import { useContactMutation } from "@/hooks/useContactMutation";
+import { usePersonalInfo } from "@/hooks/usePersonalInfo";
+import type { ContactMessage } from "@/types";
 import { SectionTitle } from "../common/SectionTitle";
 
 const contactSchema = z.object({
