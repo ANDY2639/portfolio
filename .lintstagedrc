@@ -1,0 +1,10 @@
+{
+  "src/**/*.{js,jsx,ts,tsx}": [
+    "oxfmt --write",
+    "oxlint --fix",
+    "oxlint"
+  ],
+  "*/**/*.{json,css,md}": [
+    "oxfmt --write"
+  ]
+}
