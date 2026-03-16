@@ -16,12 +16,6 @@
     "preview": "vite preview",
     "prepare": "husky"
   },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "oxlint --fix",
-      "oxfmt --write"
-    ]
-  },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@supabase/supabase-js": "^2.99.1",
