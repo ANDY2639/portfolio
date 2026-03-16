@@ -1,10 +1,11 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { usePersonalInfo } from "../../hooks/usePersonalInfo";
+
 import { useContactMutation } from "../../hooks/useContactMutation";
-import { SectionTitle } from "../common/SectionTitle";
+import { usePersonalInfo } from "../../hooks/usePersonalInfo";
 import type { ContactMessage } from "../../types";
+import { SectionTitle } from "../common/SectionTitle";
 
 const contactSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -16,7 +17,7 @@ const contactSchema = z.object({
 export function Contact() {
   const { data: personalInfo } = usePersonalInfo();
   const contactMutation = useContactMutation();
-  
+
   const {
     register,
     handleSubmit,
@@ -64,7 +65,9 @@ export function Contact() {
                     placeholder="Tu nombre"
                     className={`input input-bordered ${errors.name ? "input-error" : ""}`}
                   />
-                  {errors.name && <span className="text-error text-sm mt-1">{errors.name.message}</span>}
+                  {errors.name && (
+                    <span className="text-error text-sm mt-1">{errors.name.message}</span>
+                  )}
                 </div>
 
                 <div className="form-control">
@@ -78,7 +81,9 @@ export function Contact() {
                     placeholder="tu@email.com"
                     className={`input input-bordered ${errors.email ? "input-error" : ""}`}
                   />
-                  {errors.email && <span className="text-error text-sm mt-1">{errors.email.message}</span>}
+                  {errors.email && (
+                    <span className="text-error text-sm mt-1">{errors.email.message}</span>
+                  )}
                 </div>
 
                 <div className="form-control">
@@ -91,11 +96,13 @@ export function Contact() {
                     className={`textarea textarea-bordered h-32 ${errors.message ? "textarea-error" : ""}`}
                     placeholder="Tu mensaje aquí..."
                   ></textarea>
-                  {errors.message && <span className="text-error text-sm mt-1">{errors.message.message}</span>}
+                  {errors.message && (
+                    <span className="text-error text-sm mt-1">{errors.message.message}</span>
+                  )}
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className={`btn btn-primary w-full ${contactMutation.isPending ? "loading" : ""}`}
                   disabled={contactMutation.isPending}
                 >

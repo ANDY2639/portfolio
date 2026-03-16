@@ -14,13 +14,13 @@ export function Stats() {
             <div className="stat-value">{stats.total_visits}</div>
             <div className="stat-desc text-primary-content/70">Desde el inicio</div>
           </div>
-          
+
           <div className="stat">
             <div className="stat-title text-primary-content/70">Visitantes Únicos</div>
             <div className="stat-value">{stats.unique_visitors}</div>
             <div className="stat-desc text-primary-content/70">Global</div>
           </div>
-          
+
           <div className="stat">
             <div className="stat-title text-primary-content/70">Visitas Hoy</div>
             <div className="stat-value text-secondary">{stats.today_visits}</div>

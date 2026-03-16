@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+
 import { personalInfo } from "../../data/personal";
 
 export function Navbar() {
@@ -10,7 +11,6 @@ export function Navbar() {
     { label: "Sobre mí", href: "/#about" },
     { label: "Proyectos", href: "/#projects" },
     { label: "Habilidades", href: "/#skills" },
-    { label: "Blog", href: "/#blog" },
     { label: "Contacto", href: "/#contact" },
   ];
 
@@ -53,10 +53,7 @@ export function Navbar() {
           >
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link 
-                  to={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
+                <Link to={item.href} onClick={(e) => handleNavClick(e, item.href)}>
                   {item.label}
                 </Link>
               </li>
@@ -71,7 +68,7 @@ export function Navbar() {
         <ul className="menu menu-horizontal px-1 gap-2">
           {navItems.map((item) => (
             <li key={item.href}>
-              <Link 
+              <Link
                 to={item.href}
                 className="rounded-lg transition-colors"
                 onClick={(e) => handleNavClick(e, item.href)}
@@ -83,8 +80,8 @@ export function Navbar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link 
-          to="/#contact" 
+        <Link
+          to="/#contact"
           className="btn btn-primary"
           onClick={(e) => handleNavClick(e, "/#contact")}
         >

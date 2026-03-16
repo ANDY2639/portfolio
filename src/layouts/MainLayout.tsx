@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
-import { Navbar } from "../components/layout/Navbar";
+
 import { Footer } from "../components/layout/Footer";
-import { useScrollToHash } from "../hooks/useScrollToHash";
+import { Navbar } from "../components/layout/Navbar";
 import { usePageView } from "../hooks/usePageView";
+import { useScrollToHash } from "../hooks/useScrollToHash";
 
 export function MainLayout() {
   // Registrar visitas automáticamente en cada navegación
